@@ -1,0 +1,243 @@
+/* ==========================================================================
+   The React-Redux Bank — Private Ledger Theme
+   Fonts: Fraunces (display/serif) + Inter (body) + JetBrains Mono (figures)
+   ========================================================================== */
+
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap");
+
+:root {
+  --ink: #0b0d0f;
+  --panel: #14171a;
+  --panel-raised: #1b1f23;
+  --hairline: rgba(201, 162, 71, 0.25);
+  --gold: #c9a247;
+  --gold-bright: #e4c877;
+  --paper: #ece7db;
+  --paper-dim: #a9a397;
+  --danger: #b5654a;
+
+  --font-display: "Fraunces", serif;
+  --font-body: "Inter", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background:
+    radial-gradient(
+      ellipse 80% 60% at 50% -10%,
+      rgba(201, 162, 71, 0.08),
+      transparent
+    ),
+    var(--ink);
+  color: var(--paper);
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+#root,
+body > div {
+  display: flex;
+  justify-content: center;
+  padding: 64px 24px 96px;
+}
+
+/* ---- App shell: a private ledger card ---- */
+.App,
+body > div > div {
+  width: 100%;
+  max-width: 460px;
+}
+
+/* ---- Letterhead ---- */
+h1 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 1.7rem;
+  letter-spacing: 0.01em;
+  text-align: center;
+  color: var(--paper);
+  margin: 0 0 20px;
+  padding-bottom: 20px;
+  position: relative;
+}
+
+h1::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 72px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+
+/* ---- Section cards ---- */
+h2 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 1.05rem;
+  color: var(--gold-bright);
+  letter-spacing: 0.02em;
+  margin: 0 0 16px;
+}
+
+h2 + .inputs,
+h2 ~ .inputs {
+  margin-top: 0;
+}
+
+/* Every direct section (Customer greeting, CreateCustomer, AccountOperations) */
+body > div > div > div {
+  background: var(--panel);
+  border: 1px solid var(--hairline);
+  border-radius: 10px;
+  padding: 24px 26px;
+  margin-bottom: 16px;
+  box-shadow: 0 12px 32px -16px rgba(0, 0, 0, 0.6);
+}
+
+/* Welcome line */
+h2:only-child {
+  margin: 0;
+}
+
+/* ---- Forms ---- */
+.inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.inputs > div {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  box-shadow: none;
+}
+
+label {
+  flex: 0 0 100%;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--paper-dim);
+  font-weight: 500;
+}
+
+input,
+select {
+  flex: 1;
+  min-width: 0;
+  background: var(--ink);
+  border: 1px solid rgba(201, 162, 71, 0.2);
+  border-radius: 6px;
+  padding: 10px 12px;
+  color: var(--paper);
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  outline: none;
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+input::placeholder {
+  color: var(--paper-dim);
+  opacity: 0.6;
+}
+
+input:focus,
+select:focus {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(201, 162, 71, 0.15);
+}
+
+select {
+  flex: 0 0 auto;
+  font-family: var(--font-body);
+  cursor: pointer;
+}
+
+/* ---- Buttons ---- */
+button {
+  flex: 0 0 auto;
+  background: linear-gradient(180deg, var(--gold-bright), var(--gold));
+  color: #14100a;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 18px;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.85rem;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  transition:
+    transform 0.12s ease,
+    filter 0.12s ease;
+}
+
+button:hover {
+  filter: brightness(1.08);
+}
+
+button:active {
+  transform: translateY(1px);
+}
+
+/* Loan payback row reads as a warning notice */
+.inputs > div:has(span) {
+  background: rgba(181, 101, 74, 0.08);
+  border: 1px solid rgba(181, 101, 74, 0.3);
+  border-radius: 6px;
+  padding: 12px 14px;
+  justify-content: space-between;
+}
+
+.inputs > div:has(span) span {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--danger);
+}
+
+.inputs > div:has(span) button {
+  background: transparent;
+  border: 1px solid var(--danger);
+  color: var(--danger);
+}
+
+.inputs > div:has(span) button:hover {
+  background: rgba(181, 101, 74, 0.15);
+}
+
+/* ---- Balance display: the passbook figure ---- */
+.balance {
+  text-align: center;
+  font-family: var(--font-mono);
+  font-weight: 600;
+  font-size: 2.1rem;
+  letter-spacing: 0.02em;
+  color: var(--gold-bright);
+  background: var(--panel-raised);
+  border: 1px solid var(--hairline);
+  border-radius: 10px;
+  padding: 28px 24px;
+  box-shadow:
+    0 12px 32px -16px rgba(0, 0, 0, 0.6),
+    inset 0 0 0 1px rgba(201, 162, 71, 0.05);
+}
+
+/* Welcome heading sits directly in its own card, no extra h2 chrome needed */
