@@ -1,13 +1,20 @@
+import { type } from "@testing-library/user-event/dist/type";
+
 export const initialStateAccount = {
   balance: 0,
   loan: 0,
   loanPurpose: "",
+  isLoading: false,
 };
 
 export function accountReducer(state = initialStateAccount, action) {
   switch (action.type) {
-    case "account/deposite":
-      return { ...state, balance: state.balance + action.payload };
+    case "account/deposit":
+      return {
+        ...state,
+        balance: state.balance + action.payload,
+        isLoading: false,
+      };
     case "account/withdraw":
       return { ...state, balance: state.balance - action.payload };
     case "account/requestLoan":
@@ -25,13 +32,29 @@ export function accountReducer(state = initialStateAccount, action) {
         loanPurpose: "",
         balance: state.balance - state.loan,
       };
+    case "account/convertingCurrency":
+      return { ...state, isLoading: true };
     default:
       return state;
   }
 }
 
 export function deposit(amount, currency) {
-  return { type: "account/deposite", payload: amount };
+  if (currency === "USD")
+    return { type: "account/deposit", payload: Number(amount) };
+
+  return async function (dispatch, getState) {
+    dispatch({ type: "account/convertingCurrency" });
+    //Api call
+    const res = await fetch(
+      `https://api.frankfurter.dev/v2/rate/${currency}/USD`,
+    )
+      .then((r) => r.json())
+      .then((d) => (amount * d.rate).toFixed(2));
+
+    //return action
+    dispatch({ type: "account/deposit", payload: Number(res) });
+  };
 }
 
 export function withdraw(amount) {
