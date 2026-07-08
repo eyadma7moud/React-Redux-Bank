@@ -40,6 +40,27 @@ function AccountOperations() {
     dispach(payLoan());
   }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
   return (
     <div>
       <h2>Your account operations</h2>
